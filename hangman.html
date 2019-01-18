@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">	
+	<title>Игра Виселица</title>
+</head>
+<body>
+
+<script>
+
+// создаем массив со словами, из которого будет выбираться слово для отгадывания
+var words = [
+	"программа",
+	"прекрасный",
+	"собака",
+	"оладушек",
+	"котейка",
+	"диван",
+	"монетка",
+	"баобаб"
+];
+
+
+// сохраняем массив в переменной и с помощью рандома выбираем из него случайное слово
+var word = words[Math.floor(Math.random() * words.length)];
+
+// создаем пустой массив (итоговый), и заполним символами подчеркивания, которые соответствуют количеству букв в загаданном слове
+var answerArray = [];
+for (var i = 0; i < word.length; i++){
+	answerArray[i] = "_";
+}
+
+// создаем переменную, приравненную к длине загаданного слова. Она нужна, чтобы отслеживать количество букв, которые нужно отгадать
+var remainingLetters = word.length;
+var guesses = 20;
+// основной цикл игры
+while (remainingLetters > 0 && guesses > 0){
+	// основной код
+		// показываем состояние игры
+	alert(answerArray.join(" "));
+	// запрашиваем вариант ответа
+	var guess = prompt("Угадайте букву или введите Отмена для выхода из игры.");
+	if (guess === null){
+		// выходим из игрового цикла
+		break;
+	} else if (guess.length !== 1){
+		alert ("Пожалуйста, введите только одну букву.");
+	} else{
+		guesses--;
+		guess = guess.toLowerCase();
+		// обновляем состояние игры
+		for (var j = 0; j < word.length; j++){
+			if (word[j] === guess && answerArray[j] === "_"){
+				answerArray[j] = guess;
+				remainingLetters--;
+			}
+		}
+	}	
+}
+
+// отображаем ответ и поздравляем игрока
+alert (answerArray.join(" "));
+if (guesses > 0){
+	alert ("Отлично! Было загадано слово - " + word);
+} else{
+	alert ("Попытки закончились! Было загадано слово - " + word);
+};
+
+</script>
+
+</body>
+</html>
